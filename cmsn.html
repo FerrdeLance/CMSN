@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinh Nhật Người Tồy 🎂</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
+
+        :root {
+            --sage-light: #c1e1c1; 
+            --sage-main: #87a987;
+            --sage-dark: #4a5d4e;
+            --bg-color: #f4f9f4;
+            --text-color: #2c3e2d;
+            --accent: #e8a87c; /* Cam đào pastel tạo điểm nhấn */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Quicksand', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            background-image: linear-gradient(135deg, #f4f9f4 25%, #e3efe4 100%);
+        }
+
+        .main-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(74, 93, 78, 0.15);
+            width: 90%;
+            max-width: 550px;
+            text-align: center;
+            border: 2px solid var(--sage-light);
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            color: var(--sage-dark);
+            margin-bottom: 5px;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sub-text {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+
+        .status-box {
+            background: #f8fcf8;
+            border: 2px dashed var(--sage-main);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .status-item {
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+
+        .icon { color: var(--sage-main); font-weight: bold; margin-right: 5px; }
+        .highlight { color: var(--accent); font-weight: bold; }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-around;
+            position: relative;
+            height: 60px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: none;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        #btn-leave {
+            background-color: var(--accent);
+            color: white;
+            position: absolute;
+            left: 2%;
+        }
+
+        #btn-work {
+            background-color: var(--sage-main);
+            color: white;
+            position: absolute;
+            right: 2%;
+        }
+
+        #final-message {
+            display: none;
+            margin-top: 25px;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            background: #f8fcf8;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid var(--accent);
+            text-align: left;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-card">
+        <h1>Báo Cáo Tăng Tuổi</h1>
+        <div class="sub-text">Hệ thống ghi nhận nhà tư bản vừa già thêm 1 tuổi.</div>
+
+        <div id="setup-view">
+            <div class="status-box">
+                <div class="status-item"><span class="icon">✨</span> Đối tượng: <strong>Người thi trong ngày sinh nhật=))))</strong></div>
+                <div class="status-item"><span class="icon">✨</span> Tình trạng cột sống: <span class="highlight">Kêu rắc rắc mỗi khi đứng lên 🦴</span></div>
+                <div class="status-item"><span class="icon">✨</span> Tình trạng nhan sắc: Táiiiiiiiiiiiiiii</div>
+            </div>
+
+            <div class="sub-text">Hôm nay sinh nhật, m sẽ làm gì :)?</div>
+
+            <div class="btn-container">
+                <button id="btn-leave" class="btn" onmouseover="startDodge()">Ngủ</button>
+                <button id="btn-work" class="btn" onclick="celebrate()">Chấp nhận thực tại & Nhận quà 💻</button>
+            </div>
+        </div>
+
+        <div id="final-message"></div>
+    </div>
+
+    <script>
+        const btnLeave = document.getElementById('btn-leave');
+        const setupView = document.getElementById('setup-view');
+        const messageBox = document.getElementById('final-message');
+        const card = document.querySelector('.main-card');
+
+        function startDodge() {
+            if (messageBox.style.display !== 'block') {
+                dodgeButton();
+            }
+        }
+
+        function dodgeButton() {
+            const cardRect = card.getBoundingClientRect();
+            const btnRect = btnLeave.getBoundingClientRect();
+
+            const padding = 20;
+            const maxX = cardRect.width - btnRect.width - (padding * 2);
+
+            const randomX = Math.floor(Math.random() * maxX) + padding;
+            const randomY = Math.floor(Math.random() * 80) - 40; 
+
+            btnLeave.style.left = randomX + 'px';
+            btnLeave.style.top = randomY + 'px';
+        }
+
+        function celebrate() {
+            setupView.style.display = 'none';
+            messageBox.style.display = 'block';
+            
+            messageBox.innerHTML = `
+                <h2 style="color: var(--accent); margin-top: 0; text-align: center;">🎉 CHÚC MỪNG SINH NHẬT TƯ SẢN TỒYYYYYYYYYYY! 🎉</h2>
+                <p>Đây là một lời chúc mừng sinh nhật dành cho người tồy</p>
+                <p>Chúc bẹn một tuổi mới bùng lổ, all money back your home =)))) btw một tuổi mới chạy ít dl thoai✨🎉</p>
+                <p>Hẹ hẹ làm đi xong sau này bao nuôi t =))))✨</p>
+            `;
+        }
+    </script>
+</body>
+</html>
