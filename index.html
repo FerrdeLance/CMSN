@@ -13,7 +13,7 @@
             --sage-dark: #4a5d4e;
             --bg-color: #f4f9f4;
             --text-color: #2c3e2d;
-            --accent: #e8a87c; /* Cam đào pastel tạo điểm nhấn */
+            --accent: #e8a87c; 
         }
 
         body {
@@ -40,6 +40,7 @@
             border: 2px solid var(--sage-light);
             position: relative;
             z-index: 2;
+            box-sizing: border-box;
         }
 
         h1 {
@@ -68,6 +69,7 @@
         .status-item {
             margin-bottom: 12px;
             font-size: 1.05rem;
+            line-height: 1.4;
         }
 
         .icon { color: var(--sage-main); font-weight: bold; margin-right: 5px; }
@@ -79,6 +81,7 @@
             position: relative;
             height: 60px;
             margin-top: 30px;
+            width: 100%;
         }
 
         .btn {
@@ -91,6 +94,7 @@
             cursor: pointer;
             transition: all 0.2s;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            white-space: nowrap;
         }
 
         .btn:hover {
@@ -103,6 +107,7 @@
             color: white;
             position: absolute;
             left: 2%;
+            z-index: 10;
         }
 
         #btn-work {
@@ -110,6 +115,7 @@
             color: white;
             position: absolute;
             right: 2%;
+            z-index: 5;
         }
 
         #final-message {
@@ -124,6 +130,36 @@
             text-align: left;
         }
 
+        /* --- TỐI ƯU GIAO DIỆN CHO ĐIỆN THOẠI MÀN HÌNH NHỎ --- */
+        @media (max-width: 600px) {
+            .main-card {
+                padding: 25px 15px;
+            }
+            h1 { font-size: 1.4rem; }
+            .sub-text { font-size: 0.9rem; }
+            .status-item { font-size: 0.95rem; }
+            
+            .btn-container {
+                height: 110px;
+            }
+            
+            .btn {
+                font-size: 0.85rem;
+                padding: 10px 15px;
+                white-space: normal;
+                width: 90%; 
+            }
+
+            #btn-leave {
+                left: 5%;
+                top: 0;
+            }
+
+            #btn-work {
+                right: 5%;
+                bottom: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -142,12 +178,14 @@
             <div class="sub-text">Hôm nay sinh nhật, m sẽ làm gì :)?</div>
 
             <div class="btn-container">
-                <button id="btn-leave" class="btn" onmouseover="startDodge()">Ngủ</button>
+                <button id="btn-leave" class="btn" onmouseover="startDodge()" ontouchstart="startDodge()">Ngủ</button>
                 <button id="btn-work" class="btn" onclick="celebrate()">Chấp nhận thực tại & Nhận quà 💻</button>
             </div>
         </div>
 
         <div id="final-message"></div>
+        
+        <audio id="bg-music" src="nhac.mp3" preload="auto"></audio>
     </div>
 
     <script>
@@ -163,14 +201,16 @@
         }
 
         function dodgeButton() {
+            btnLeave.style.width = 'max-content';
+            
             const cardRect = card.getBoundingClientRect();
             const btnRect = btnLeave.getBoundingClientRect();
 
             const padding = 20;
             const maxX = cardRect.width - btnRect.width - (padding * 2);
-
+            
             const randomX = Math.floor(Math.random() * maxX) + padding;
-            const randomY = Math.floor(Math.random() * 80) - 40; 
+            const randomY = Math.floor(Math.random() * 100) - 50; 
 
             btnLeave.style.left = randomX + 'px';
             btnLeave.style.top = randomY + 'px';
@@ -179,6 +219,12 @@
         function celebrate() {
             setupView.style.display = 'none';
             messageBox.style.display = 'block';
+            
+            // Kích hoạt nhạc
+            const music = document.getElementById('bg-music');
+            if(music) {
+                music.play().catch(e => console.log("Trình duyệt chặn autoplay!"));
+            }
             
             messageBox.innerHTML = `
                 <h2 style="color: var(--accent); margin-top: 0; text-align: center;">🎉 CHÚC MỪNG SINH NHẬT TƯ SẢN TỒYYYYYYYYYYY! 🎉</h2>
